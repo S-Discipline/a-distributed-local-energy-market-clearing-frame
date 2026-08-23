@@ -48,6 +48,10 @@ economics reuse the base-market equilibrium (same framework), as the paper says.
 - [`reports/two-loop-admm-lem/report.md`](reports/two-loop-admm-lem/report.md) — illustrated, implementation-led claim-by-claim report (all figures)
 - [`two_loop_admm_reproduction.py`](two_loop_admm_reproduction.py) — marimo notebook opening with the evidence
 
+> This repository is kept **private** (no public Molab badge). To view the
+> notebook locally: `pip install marimo`, then `marimo edit two_loop_admm_reproduction.py`
+> (edit) or `marimo run two_loop_admm_reproduction.py` (read-only app).
+
 ### Experiment log
 
 | Branch | Purpose / change | Run command | Assessment | Compute |
