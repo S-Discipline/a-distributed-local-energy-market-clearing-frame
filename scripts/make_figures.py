@@ -22,7 +22,7 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-OUT = os.path.join(os.path.join(ROOT, "reports"), "images")
+OUT = os.path.join(os.path.join(ROOT, "reports"), "two-loop-admm-lem", "images")
 os.makedirs(OUT, exist_ok=True)
 
 R = os.path.join(ROOT, "runs_out")
