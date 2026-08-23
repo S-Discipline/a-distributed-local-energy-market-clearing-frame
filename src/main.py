@@ -22,8 +22,14 @@ from . import market_data
 from .network import Network
 from .admm import clear_market, Prosumer
 from . import cases as case_mod
+from . import config
 
 C_LOSS = 1.0  # $/pu-hh loss penalty (per-unit on 1 MVA base -> $/MWh-equivalent)
+RHO_A = config.RHO_A
+RHO_L = config.RHO_L
+EPS_OUTER = config.OUTER_EPS
+EPS_INNER = config.INNER_EPS
+MIP = config.MIP_BINARIES
 
 
 def build_prosumers(network, load_shape, penetration):
@@ -48,6 +54,7 @@ def run_base(outputs, verbose=True):
     wem = market_data.wem_price()
     participants = build_prosumers(net, load_shape, 0.30)
     res = clear_market(net, participants, wem, load_shape, C_loss=C_LOSS,
+                       rho_a=RHO_A, rho_l=RHO_L, eps_outer=EPS_OUTER, eps_inner=EPS_INNER,
                        verbose=verbose)
     # costs
     p_net_arr = np.vstack(res.p_net)
@@ -75,6 +82,7 @@ def run_cases(outputs):
     participants = build_prosumers(net, load_shape, 0.30)
 
     base = clear_market(net, participants, wem, load_shape, C_loss=C_LOSS,
+                        rho_a=RHO_A, rho_l=RHO_L, eps_outer=EPS_OUTER, eps_inner=EPS_INNER,
                         verbose=False)
     ci = case_mod.case_independent(net, participants, wem, load_shape,
                                    C_loss=C_LOSS)
@@ -105,6 +113,7 @@ def run_penetration(outputs):
     for pen in [0.45, 0.60, 0.75]:
         participants = build_prosumers(net, load_shape, pen)
         res = clear_market(net, participants, wem, load_shape, C_loss=C_LOSS,
+                           rho_a=RHO_A, rho_l=RHO_L, eps_outer=EPS_OUTER, eps_inner=EPS_INNER,
                            verbose=False)
         p_net_arr = np.vstack(res.p_net)
         avg_prosumer = float(np.mean(np.sum(p_net_arr * np.vstack(res.dlmp), axis=1)))
@@ -128,6 +137,7 @@ def run_dlmp(outputs):
     wem = market_data.wem_price()
     participants = build_prosumers(net, load_shape, 0.30)
     res = clear_market(net, participants, wem, load_shape, C_loss=C_LOSS,
+                       rho_a=RHO_A, rho_l=RHO_L, eps_outer=EPS_OUTER, eps_inner=EPS_INNER,
                        verbose=False)
     # nodal DLMP variation at two representative hour bands
     dlmp_node = res.dlmp
